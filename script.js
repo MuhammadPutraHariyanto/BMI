@@ -1,31 +1,48 @@
-const btn = document.getElementById("calculate")
+window.onload = () => {
+	let button = document.querySelector("#btn");
 
-btn.addEventListener("click", function(){
-    let height = document.querySelector("#height").Value;
-    let weight = document.querySelector("#weight").Value;
+	// Function for calculating BMI
+	button.addEventListener("click", calculateBMI);
+};
 
-    if (height == "" || weight == "") {
-        alert("Silahkan isi data terlebih dahulu");
-        return;
-    }
-    height = height / 100;
-    let BMI = weight / (height * height);
-    BMI = BMI.toFixed(2);
-    document.querySelector("#result").innerHTML = BMI;
-    let status = "";
-    if (BMI <18.5) {
-        status = "Underweight ;(";
-    }
-    if (BMI => 18.5 && BMI < 25) {
-        status = "Healty :)";
-    }
-    if (BMI =>25 && BMI < 30) {
-        status = "Overwight ;(";
-    }
-    if (BMI =>30) {
-        status = "Obese :o";
-    }
-    document.querySelector(
-        ".comment"
-    ).innerHTML = `you are <span id="comment">${status}</span>`;
-});
+function calculateBMI() {
+
+	/* Getting input from user into height variable.
+	Input is string so typecasting is necessary. */
+	let height = parseInt(document
+			.querySelector("#height").value);
+
+	/* Getting input from user into weight variable.
+	Input is string so typecasting is necessary.*/
+	let weight = parseInt(document
+			.querySelector("#weight").value);
+
+	let result = document.querySelector("#result");
+
+	// Checking the user providing a proper
+	// value or not
+	if (height === "" || isNaN(height))
+		result.innerHTML = "Provide a valid Height!";
+
+	else if (weight === "" || isNaN(weight))
+		result.innerHTML = "Provide a valid Weight!";
+
+	// If both input is valid, calculate the bmi
+	else {
+
+		// Fixing upto 2 decimal places
+		let bmi = (weight / ((height * height)
+							/ 10000)).toFixed(2);
+
+		// Dividing as per the bmi conditions
+		if (bmi < 18.6) result.innerHTML =
+			`Under Weight : <span>${bmi}</span>`;
+
+		else if (bmi >= 18.6 && bmi < 24.9)
+			result.innerHTML =
+				`Normal : <span>${bmi}</span>`;
+
+		else result.innerHTML =
+			`Over Weight : <span>${bmi}</span>`;
+	}
+}
